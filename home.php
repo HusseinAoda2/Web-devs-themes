@@ -1,53 +1,58 @@
 <!-- دالة لاستدعاء رأس الصفحة -->
 <?php
 get_header();
+// شروط اللوب لعرض البوست
+$featured_loop = new WP_Query([
+    // 'cat' => 224,
+    // 'category_name' => 'feautred',
+    'name' => 'Hello world!',
+    // 'post_status' => 'publish',
+    // 'post_type' => 'product', // لعرض منتج
+    'posts_per_page' => 1,
+    'offset' => 0,
+    'nopaging' => false,
+    'order' => 'ASC',
+    // 'orderby' => 'rand',
+    /*'tax_query' => [
+        'relation' => 'OR',
+        [
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => 'tshirts',
+        ],
+        [
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => 'music',
+        ]
+    ],*/
+]);
+
 ?>
 
-                <section class="elementor-section elementor-top-section elementor-element elementor-element-c48f54b elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="c48f54b" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-                    <div class="elementor-container elementor-column-gap-default">
-                        <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-6ce56cf" data-id="6ce56cf" data-element_type="column">
-                            <div class="elementor-widget-wrap elementor-element-populated">
-                                <div class="elementor-element elementor-element-3438ec4 elementor-widget elementor-widget-heading" data-id="3438ec4" data-element_type="widget" data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <h3 class="elementor-heading-title elementor-size-large">ADVISE ME</h3>		
-                                    </div>
-                                </div>
-                                <div class="elementor-element elementor-element-d0f1af0 elementor-widget elementor-widget-text-editor" data-id="d0f1af0" data-element_type="widget" data-widget_type="text-editor.default">
-                                    <div class="elementor-widget-container">
-                                        <p>Give me advice via Sarahah</p>						
-                                    </div>
+                <section class="elementor-section elementor-top-section elementor-element elementor-element-c48f54b elementor-section-boxed elementor-section-height-default elementor-section-height-default" style="background-size: cover; background-image: url(<?php the_post_thumbnail_url('large') // استدعاء صورة البوست في خلفية الترويسة ?>);" data-id="c48f54b" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                    <?php 
+                    if ($featured_loop->have_posts()) : 
+                        $featured_loop->the_post(); // $post
+                    ?>
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-6ce56cf" data-id="6ce56cf" data-element_type="column">
+                        <div class="elementor-widget-wrap elementor-element-populated">
+                            <div class="elementor-element elementor-element-3438ec4 elementor-widget elementor-widget-heading" data-id="3438ec4" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h3 class="elementor-heading-title elementor-size-large"><?php the_title() /* عرض عنوان البوست */ ?></h3>		
                                 </div>
                             </div>
-                        </div>
-                        <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-6b28bbc" data-id="6b28bbc" data-element_type="column">
-                            <div class="elementor-widget-wrap elementor-element-populated">
-                                <div class="elementor-element elementor-element-a3abcef elementor-widget elementor-widget-heading" data-id="a3abcef" data-element_type="widget" data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <h3 class="elementor-heading-title elementor-size-large">ASK ME</h3>		
-                                    </div>
-                                </div>
-                                <div class="elementor-element elementor-element-caf7855 elementor-widget elementor-widget-text-editor" data-id="caf7855" data-element_type="widget" data-widget_type="text-editor.default">
-                                    <div class="elementor-widget-container">
-                                        <p>Ask me directly on the ASK website</p>	
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-2dba159" data-id="2dba159" data-element_type="column">
-                            <div class="elementor-widget-wrap elementor-element-populated">
-                                <div class="elementor-element elementor-element-e522c9f elementor-widget elementor-widget-heading" data-id="e522c9f" data-element_type="widget" data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <h3 class="elementor-heading-title elementor-size-large">EDUCATION</h3>		
-                                    </div>
-                                </div>
-                                <div class="elementor-element elementor-element-92d875d elementor-widget elementor-widget-text-editor" data-id="92d875d" data-element_type="widget" data-widget_type="text-editor.default">
-                                    <div class="elementor-widget-container">
-                                        <p>I have a diploma in multimedia from the University of Palestine and I am currently studying a Bachelor of Computer Engineering</p>		
-                                    </div>
+                            <div class="elementor-element elementor-element-d0f1af0 elementor-widget elementor-widget-text-editor" data-id="d0f1af0" data-element_type="widget" data-widget_type="text-editor.default">
+                                <div class="elementor-widget-container">
+                                    <p><?php the_excerpt() ?></p>				
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <?php 
+                    endif; // نهاية الشرط
+                    wp_reset_postdata();
+                    ?>
                 </section>
                 <section class="elementor-section elementor-top-section elementor-element elementor-element-aba2198 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="aba2198" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
                     <div class="elementor-container elementor-column-gap-default">
